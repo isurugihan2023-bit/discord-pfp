@@ -50,8 +50,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at center, rgba(10, 20, 40, 0.4) 0%, rgba(5, 10, 25, 0.85) 100%);
-    backdrop-filter: blur(2px);
+    background: radial-gradient(circle at center, rgba(0, 15, 30, 0.1) 0%, rgba(0, 5, 10, 0.92) 85%);
+    backdrop-filter: blur(1.5px);
     z-index: -1;
 }
 
