@@ -294,8 +294,8 @@ function initMusicPlayer() {
 
     if (!music || !toggleBtn || !sliderRoot) return;
 
-    let isPlaying = false;
-    let volume = 30; // 0-100
+    let isPlaying = true;
+    let volume = 60; // default 60% <!-- unmuted and 60% volume -->
     const MAX_OVERFLOW = 50;
 
     // Decay function for elastic effect
@@ -331,6 +331,18 @@ function initMusicPlayer() {
 
     // Initialize UI
     updateUI();
+    
+    // Set initial playing state for icons
+    icon.className = 'fas fa-volume-up';
+    toggleBtn.classList.add('playing');
+    
+    // Attempt auto-play on load (Note: may still be blocked by browser until first interaction)
+    music.play().catch(err => {
+        console.log("Auto-play blocked, waiting for interaction.");
+        isPlaying = false; // reset state if blocked
+        icon.className = 'fas fa-volume-mute';
+        toggleBtn.classList.remove('playing');
+    });
 
     toggleBtn.addEventListener('click', () => {
         if (isPlaying) {

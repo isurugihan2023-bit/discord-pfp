@@ -68,7 +68,7 @@ body {
 
 /* Profile Card */
 .profile-card {
-    width: 450px;
+    width: 415px;
     background: var(--card-bg);
     backdrop-filter: blur(25px);
     border: 1px solid var(--glass-border);
@@ -96,16 +96,16 @@ body {
 /* Avatar */
 .avatar-section {
     position: relative;
-    margin-top: -65px;
     padding: 0 30px;
+    margin-top: -57px;
     display: flex;
     justify-content: center;
 }
 
 .avatar-wrapper {
     position: relative;
-    width: 130px;
-    height: 130px;
+    width: 115px;
+    height: 115px;
 }
 
 .avatar-img {
@@ -145,7 +145,7 @@ body {
 
 .profile-name {
     font-family: var(--font-heading);
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 700;
     margin-bottom: 5px;
     color: #fff;
@@ -574,7 +574,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    width: 180px; /* Reduced from 200px */
+    width: 170px; /* Reduced from 180px */
     cursor: none;
     transition: background 0.3s ease, transform 0.2s ease;
     box-shadow: 0 4px 15px rgba(0, 173, 238, 0.3);
