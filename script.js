@@ -344,18 +344,38 @@ function initMusicPlayer() {
         toggleBtn.classList.remove('playing');
     });
 
-    toggleBtn.addEventListener('click', () => {
+    const startMusic = () => {
+        if (!isPlaying) {
+            music.play().then(() => {
+                isPlaying = true;
+                icon.className = 'fas fa-volume-up';
+                toggleBtn.classList.add('playing');
+                updateUI();
+            }).catch(err => console.log("Playback failed on interaction:", err));
+            // Remove listeners once tried
+            document.removeEventListener('click', startMusic);
+            document.removeEventListener('keydown', startMusic);
+        }
+    };
+
+    toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent the global listener from firing
         if (isPlaying) {
             music.pause();
             icon.className = 'fas fa-volume-mute';
             toggleBtn.classList.remove('playing');
         } else {
-            music.play().catch(err => console.error("Playback failed:", err));
-            icon.className = 'fas fa-volume-up';
-            toggleBtn.classList.add('playing');
+            music.play().then(() => {
+                icon.className = 'fas fa-volume-up';
+                toggleBtn.classList.add('playing');
+            }).catch(err => console.error("Playback failed:", err));
         }
         isPlaying = !isPlaying;
     });
+
+    // Aggressive auto-play on any interaction
+    document.addEventListener('click', startMusic);
+    document.addEventListener('keydown', startMusic);
 
     // Slider Logic
     let isDragging = false;
