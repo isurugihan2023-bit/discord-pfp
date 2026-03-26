@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n3wb | Gaming Profile</title>
+    <!-- Favicon placeholder -->
+    <link rel="icon" href="avatar.png" type="image/png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="shape-grid-canvas" class="shape-grid-canvas"></canvas>
+    <div class="bg-overlay"></div>
+    
+    <div class="container">
+        <!-- Profile Card -->
+        <main class="profile-card">
+            <!-- Header/Banner Area -->
+            <div class="banner"></div>
+            
+            <!-- Avatar Section -->
+            <div class="avatar-section">
+                <div class="avatar-wrapper">
+                    <img src="avatar.png" alt="Avatar" class="avatar-img">
+                    <img src="" alt="" class="avatar-decoration" style="display: none;">
+                    <div class="status-indicator online"></div>
+                </div>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="profile-content">
+                <h1 class="profile-name">n3wb</h1>
+                <p class="profile-bio">Its All About Gaming ....</p>
+                <div id="custom-status-container" style="display: none;"></div>
+                
+                <div class="profile-meta">
+                    <div class="meta-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Sri Lanka</span>
+                    </div>
+                </div>
+
+                <!-- Add Friend Button -->
+                <div class="friend-action-container">
+                    <button id="add-friend-btn" class="friend-btn-discord">
+                        <i class="fa-solid fa-user-plus"></i>
+                        <span>Add Friend</span>
+                    </button>
+                    <div id="copy-success-msg" class="copy-hint" style="display: none;">Username Copied!</div>
+                </div>
+
+                <!-- Discord Style Status Card -->
+                <div class="status-card-box">
+                   <div class="status-card-inner">
+                        <div class="status-icon-wrapper">
+                            <img src="avatar.png" alt="Small Avatar" class="mini-avatar">
+                            <div class="mini-status online"></div>
+                        </div>
+                        <div class="status-details">
+                            <div class="status-top">
+                                <span class="status-username">newb0000</span>
+                                <span class="status-tag">CYBR</span>
+                            </div>
+                            <div class="status-info-box">
+                                <p class="status-text">AFK................???</p>
+                                <div class="voice-live-indicator" style="display: none;">
+                                    <i class="fa-solid fa-microphone-lines"></i>
+                                    <span>VOICE</span>
+                                </div>
+                            </div>
+                            
+                            <div class="spotify-details">
+                                <div class="spotify-cover-wrapper">
+                                    <img class="spotify-cover" src="" alt="Album Art">
+                                    <div class="spotify-info">
+                                        <span class="song-name">Song Name</span>
+                                        <span class="artist-name">Artist Name</span>
+                                        <div class="status-dot"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- General Activity (Games/Apps List) -->
+                            <div class="activity-details" style="display: none;">
+                                <!-- Dynamic items will be injected here -->
+                            </div>
+                            
+                            <div class="voice-details">
+                                <div class="voice-status-badge">
+                                    <i class="fa-solid fa-microphone-lines"></i>
+                                    <span>In Voice Channel</span>
+                                </div>
+                            </div>
+                            
+                            <div class="no-status-hint" style="display: none;">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span>No active Discord status detected. Try Streaming or setting a custom status!</span>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+
+
+
+
+
+                <!-- Social Media Dock/List -->
+                <div class="social-dock">
+                    <a href="https://youtube.com/@NEW-BRON/videos" class="social-link youtube" target="_blank" title="YouTube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                    <a href="https://twitch.tv/newbronsl" class="social-link twitch" target="_blank" title="Twitch">
+                        <i class="fa-brands fa-twitch"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@n3wb067" class="social-link tiktok" target="_blank" title="TikTok">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+                    <a href="https://open.spotify.com/user/31ccwe6ywh2uwe2jdrvoubupid4y?si=c9ac38ca20dc4bac" class="social-link spotify" target="_blank" title="Spotify">
+                        <i class="fa-brands fa-spotify"></i>
+                    </a>
+                    <a href="https://instagram.com/isuru4444/?hl=en" class="social-link instagram" target="_blank" title="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="mailto:isurugihan2023@gmail.com" class="social-link email" title="Email">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                    <a href="https://steamcommunity.com/profiles/76561199812930590/" class="social-link steam" target="_blank" title="Steam">
+                        <i class="fa-brands fa-steam"></i>
+                    </a>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

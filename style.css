@@ -1,0 +1,614 @@
+:root {
+    --bg-color: #0b0b0b;
+    --primary-blue: #00adee;
+    --primary-blue-glow: rgba(0, 173, 238, 0.4);
+    --card-bg: rgba(255, 255, 255, 0.02);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --text-main: #ffffff;
+    --text-dim: #b9bbbe;
+    --accent-dark: #1e1f22;
+    --status-online: #23a55a;
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: auto;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.shape-grid-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    pointer-events: all; /* Needed for hover detection */
+}
+
+.bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(0, 173, 238, 0.08) 0%, rgba(0, 0, 0, 0.85) 75%);
+    z-index: -1;
+}
+
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    padding: 20px;
+}
+
+/* Profile Card */
+.profile-card {
+    width: 450px;
+    background: var(--card-bg);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+    animation: cardFloat 5s ease-in-out infinite;
+}
+
+@keyframes cardFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Banner area - making it more subtle/premium */
+.banner {
+    height: 120px;
+    background: linear-gradient(180deg, rgba(0, 173, 238, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Avatar */
+.avatar-section {
+    position: relative;
+    margin-top: -65px;
+    padding: 0 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 130px;
+    height: 130px;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 6px solid var(--accent-dark);
+    object-fit: cover;
+    background: var(--accent-dark);
+}
+
+
+
+.status-indicator {
+    position: absolute;
+    bottom: 10px;
+    right: 14px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 5px solid var(--accent-dark);
+    background: var(--status-online);
+    animation: liveStatusPulse 3s infinite;
+}
+
+@keyframes liveStatusPulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(35, 165, 90, 0.4); }
+    50% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(35, 165, 90, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(35, 165, 90, 0); }
+}
+
+/* Profile Content */
+.profile-content {
+    padding: 20px 30px 40px;
+    text-align: center;
+}
+
+.profile-name {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+.profile-bio {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+}
+
+#custom-status-container {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(0, 173, 238, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 173, 238, 0.3);
+    color: #00adee;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    gap: 8px;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(0, 173, 238, 0.2);
+    animation: fadeIn 0.8s ease-out;
+}
+
+#custom-status-container img {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+
+.profile-meta {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+}
+
+.meta-item i {
+    color: var(--primary-blue);
+}
+
+.status-card-box {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    text-align: left;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.status-card-box:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.status-card-inner {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.status-icon-wrapper {
+    position: relative;
+}
+
+.mini-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.mini-status {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid #1e1f22;
+    background: var(--status-online);
+}
+
+.status-details {
+    flex: 1;
+}
+
+.status-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 3px;
+}
+
+.status-username {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.status-tag {
+    background: var(--primary-blue);
+    color: white;
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 800;
+    text-transform: uppercase;
+    box-shadow: 0 0 10px var(--primary-blue-glow);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.discord-mini-icon {
+    margin-left: auto;
+    color: #5865f2;
+    font-size: 1rem;
+}
+
+.status-text {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+}
+
+.status-info-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.voice-live-indicator {
+    background: rgba(35, 165, 90, 0.1);
+    color: #23a55a;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    animation: voiceBadgePulse 2s infinite;
+    border: 1px solid rgba(35, 165, 90, 0.3);
+}
+
+@keyframes voiceBadgePulse {
+    0% { box-shadow: 0 0 0 0 rgba(35, 165, 90, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(35, 165, 90, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(35, 165, 90, 0); }
+}
+
+.spotify-details, .voice-details, .activity-details {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.status-card-box.show-poster .spotify-details, 
+.status-card-box.show-poster .voice-details,
+.status-card-box.show-poster .activity-details {
+    max-height: 500px;
+    opacity: 1;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.activity-details {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.activity-icon-container {
+    width: 65px;
+    height: 65px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: none;
+}
+
+.activity-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.activity-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.activity-state {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #23a55a;
+    border-radius: 50%;
+    margin-top: 6px;
+    box-shadow: 0 0 8px rgba(35, 165, 90, 0.4);
+    animation: statusDotPulse 2.5s infinite;
+}
+
+@keyframes statusDotPulse {
+    0% { opacity: 0.6; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 0.6; transform: scale(0.9); }
+}
+
+.voice-status-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #23a55a;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.voice-status-badge i {
+    font-size: 1.1rem;
+    animation: voicePulse 2s infinite;
+}
+
+.spotify-cover-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.spotify-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.spotify-info .song-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.spotify-info .artist-name {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+}
+
+.spotify-cover {
+    width: 65px;
+    height: 65px;
+    border-radius: 10px;
+    box-shadow: none;
+    border: none;
+    transition: transform 0.3s;
+}
+
+.spotify-cover:hover {
+    transform: scale(1.1) rotate(2deg);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Sync Button */
+.sync-container {
+    margin-bottom: 25px;
+}
+
+.sync-button {
+    background: rgba(0, 173, 238, 0.05);
+    border: 1px solid rgba(0, 173, 238, 0.2);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    cursor: none;
+    transition: all 0.3s ease;
+}
+
+.sync-button:hover {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px var(--primary-blue-glow);
+}
+
+.sync-button i {
+    font-size: 1.2rem;
+}
+
+/* Social Dock */
+.social-dock {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.25rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: none;
+}
+
+.social-link.tiktok, .social-link.steam {
+    border: none !important;
+    outline: none !important;
+}
+
+.social-link:hover {
+    transform: translateY(-5px) scale(1.1);
+}
+
+.social-link.youtube:hover {
+    background: #FF0000;
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+}
+
+.social-link.twitch:hover {
+    background: #9146FF;
+    box-shadow: 0 0 8px rgba(145, 70, 255, 0.6);
+}
+
+.social-link.tiktok:hover {
+    background: #000;
+    box-shadow: none;
+}
+
+.social-link.spotify:hover {
+    background: #1DB954;
+    box-shadow: 0 0 8px rgba(29, 185, 84, 0.6);
+}
+
+.social-link.instagram:hover {
+    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+    box-shadow: 0 0 8px rgba(225, 48, 108, 0.6);
+}
+
+.social-link.email:hover {
+    background: #4285F4;
+    box-shadow: 0 0 8px rgba(66, 133, 244, 0.6);
+}
+
+.social-link.steam:hover {
+    background: #00adee;
+    box-shadow: 0 0 8px rgba(0, 173, 238, 0.6);
+    border: none !important;
+}
+
+/* Friend Request Button */
+.friend-action-container {
+    margin-bottom: 25px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.friend-btn-discord {
+    background: #00adee;
+    border: none;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 180px; /* Reduced from 200px */
+    cursor: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 173, 238, 0.3);
+    position: relative;
+}
+
+.friend-btn-discord.clicked {
+    background: #b9bbbe !important;
+    box-shadow: none;
+}
+
+.friend-btn-discord:hover {
+    background: #0096ce;
+    transform: translateY(-2px);
+}
+
+.friend-btn-discord i {
+    font-size: 1rem;
+}
+
+.copy-hint {
+    position: absolute;
+    bottom: -22px;
+    font-size: 0.75rem;
+    color: #b9bbbe;
+    font-weight: 600;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Responsive */
+.no-status-hint {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    opacity: 0.7;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 15px;
+}
+
+
