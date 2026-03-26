@@ -285,12 +285,52 @@ function initMusicPlayer() {
     const music = document.getElementById('bg-music');
     const toggleBtn = document.getElementById('music-toggle');
     const icon = toggleBtn.querySelector('i');
+    
+    const sliderRoot = document.getElementById('volume-slider');
+    const sliderRange = document.querySelector('.slider-range');
+    const sliderTrackWrapper = document.querySelector('.slider-track-wrapper');
+    const volumeValueText = document.getElementById('volume-value');
+    const volumeIcons = document.querySelectorAll('.volume-icon');
+
+    if (!music || !toggleBtn || !sliderRoot) return;
+
     let isPlaying = false;
+    let volume = 30; // 0-100
+    const MAX_OVERFLOW = 50;
 
-    if (!music || !toggleBtn) return;
+    // Decay function for elastic effect
+    const decay = (value, max) => {
+        if (max === 0) return 0;
+        const entry = value / max;
+        const sigmoid = 2 * (1 / (1 + Math.exp(-entry)) - 0.5);
+        return sigmoid * max;
+    };
 
-    // Set initial volume
-    music.volume = 0.3;
+    const updateUI = (overflow = 0, region = 'middle') => {
+        // Update volume on audio element
+        music.volume = volume / 100;
+        
+        // Update range bar width
+        sliderRange.style.width = `${volume}%`;
+        
+        // Update text indicator
+        volumeValueText.textContent = Math.round(volume);
+
+        // Apply elastic stretch
+        const trackWidth = sliderRoot.offsetWidth;
+        const scaleX = 1 + overflow / trackWidth;
+        const scaleY = 1 - (overflow / MAX_OVERFLOW) * 0.2;
+        
+        sliderTrackWrapper.style.transform = `scaleX(${scaleX}) scaleY(${scaleY})`;
+        sliderTrackWrapper.style.transformOrigin = region === 'left' ? 'right' : 'left';
+
+        // Animate icons based on region
+        volumeIcons[0].style.transform = region === 'left' ? `scale(${1 + (overflow / MAX_OVERFLOW) * 0.4}) translateX(${-overflow * 0.5}px)` : 'scale(1) translateX(0)';
+        volumeIcons[1].style.transform = region === 'right' ? `scale(${1 + (overflow / MAX_OVERFLOW) * 0.4}) translateX(${overflow * 0.5}px)` : 'scale(1) translateX(0)';
+    };
+
+    // Initialize UI
+    updateUI();
 
     toggleBtn.addEventListener('click', () => {
         if (isPlaying) {
@@ -298,13 +338,61 @@ function initMusicPlayer() {
             icon.className = 'fas fa-volume-mute';
             toggleBtn.classList.remove('playing');
         } else {
-            music.play().catch(err => {
-                console.error("Playback failed:", err);
-            });
+            music.play().catch(err => console.error("Playback failed:", err));
             icon.className = 'fas fa-volume-up';
             toggleBtn.classList.add('playing');
         }
         isPlaying = !isPlaying;
+    });
+
+    // Slider Logic
+    let isDragging = false;
+
+    const handlePointerMove = (e) => {
+        if (!isDragging) return;
+        
+        const rect = sliderRoot.getBoundingClientRect();
+        const mouseX = e.clientX;
+        let overflowValue = 0;
+        let region = 'middle';
+
+        // Calculate new volume based on mouse position
+        let newVolume = ((mouseX - rect.left) / rect.width) * 100;
+        
+        if (mouseX < rect.left) {
+            region = 'left';
+            overflowValue = decay(rect.left - mouseX, MAX_OVERFLOW);
+            newVolume = 0;
+        } else if (mouseX > rect.right) {
+            region = 'right';
+            overflowValue = decay(mouseX - rect.right, MAX_OVERFLOW);
+            newVolume = 100;
+        } else {
+            newVolume = Math.min(Math.max(newVolume, 0), 100);
+        }
+
+        volume = newVolume;
+        updateUI(overflowValue, region);
+    };
+
+    sliderRoot.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        sliderRoot.setPointerCapture(e.pointerId);
+        sliderTrackWrapper.style.transition = 'none';
+        volumeIcons.forEach(i => i.style.transition = 'none');
+        handlePointerMove(e);
+    });
+
+    window.addEventListener('pointermove', handlePointerMove);
+
+    window.addEventListener('pointerup', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        // Snap back animation
+        sliderTrackWrapper.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        volumeIcons.forEach(i => i.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)');
+        updateUI(0, 'middle');
     });
 }
 
@@ -314,3 +402,4 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchDiscordStatus();
     setInterval(fetchDiscordStatus, 3000);
 });
+

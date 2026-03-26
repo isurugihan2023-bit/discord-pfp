@@ -138,9 +138,23 @@
     </div>
 
     <div class="music-player">
-        <button id="music-toggle" class="music-btn" title="Toggle Music">
-            <i class="fas fa-volume-mute"></i>
-        </button>
+        <div class="music-player-controls">
+            <button id="music-toggle" class="music-btn" title="Toggle Music">
+                <i class="fas fa-volume-mute"></i>
+            </button>
+            <div class="volume-slider-wrapper">
+                <i class="fas fa-volume-down volume-icon"></i>
+                <div class="slider-root" id="volume-slider">
+                    <div class="slider-track-wrapper">
+                        <div class="slider-track">
+                            <div class="slider-range"></div>
+                        </div>
+                    </div>
+                </div>
+                <i class="fas fa-volume-up volume-icon"></i>
+                <span id="volume-value" class="value-indicator">30</span>
+            </div>
+        </div>
         <audio id="bg-music" loop>
             <source src="GW.mp3" type="audio/mpeg">
         </audio>
