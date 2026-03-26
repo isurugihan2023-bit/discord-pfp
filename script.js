@@ -273,13 +273,13 @@ function updatePresence(data) {
 
     // Update Spotify Display
     const spotifyDetails = document.querySelector('.spotify-details');
-    if (spotifyDetails) spotifyDetails.style.display = data.listening_to_spotify ? 'flex' : 'none';
+    const isListeningSpotify = data.listening_to_spotify && data.discord_status !== 'offline';
+    if (spotifyDetails) spotifyDetails.style.display = isListeningSpotify ? 'flex' : 'none';
 
-    if (data.listening_to_spotify) {
+    if (isListeningSpotify) {
         if (spotifyCover) spotifyCover.src = data.spotify.album_art_url;
         if (spotifySong) spotifySong.innerText = data.spotify.song;
         if (spotifyArtist) spotifyArtist.innerText = data.spotify.artist;
-        if (statusText) statusText.innerHTML = `<i class="fa-brands fa-spotify" style="color:#1DB954; margin-right: 8px;"></i> Listening to ${data.spotify.song}`;
     }
 
     // Update General Activity (Games/Apps List)
@@ -327,33 +327,33 @@ function updatePresence(data) {
             }).join('');
             
             activityDetails.innerHTML = activitiesHTML;
-            
-            // Update status text based on priority: 1. Spotify, 2. Custom Status, 3. Game/Activity, 4. Online/Offline
-    if (data.listening_to_spotify) {
-        if (statusText) statusText.innerHTML = `<i class="fa-brands fa-spotify" style="color:#1DB954; margin-right: 8px;"></i> Listening to ${data.spotify.song}`;
-    } else {
-        const customStatus = data.activities.find(a => a.type === 4);
-        if (customStatus) {
-            let emojiStr = '';
-            if (customStatus.emoji) {
-                if (customStatus.emoji.id) {
-                    emojiStr = `<img class="status-emoji" src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.${customStatus.emoji.animated?'gif':'png'}" style="width:1.2rem; vertical-align:middle; margin-right:5px;">`;
-                } else {
-                    emojiStr = `<span style="margin-right:5px;">${customStatus.emoji.name}</span>`;
-                }
-            }
-            if (statusText) statusText.innerHTML = `${emojiStr}${customStatus.state || ''}`;
-        } else if (otherActivities.length > 0) {
-            if (statusText) statusText.innerText = `Playing ${otherActivities[0].name}${otherActivities.length > 1 ? ' & others' : ''}`;
-        } else {
-            if (statusText) statusText.innerText = data.discord_status === 'offline' ? 'Offline' : 'AFK................???';
-        }
-    }
         } else {
             activityDetails.style.display = 'none';
-            // The statusText for non-Spotify, non-activity is now handled in the consolidated logic above
+        }
+
+        // Update status text based on priority: 1. Spotify, 2. Custom Status, 3. Game/Activity, 4. Online/Offline
+        if (isListeningSpotify) {
+            if (statusText) statusText.innerHTML = `<i class="fa-brands fa-spotify" style="color:#1DB954; margin-right: 8px;"></i> Listening to ${data.spotify.song}`;
+        } else {
+            const customStatus = data.activities.find(a => a.type === 4);
+            if (customStatus) {
+                let emojiStr = '';
+                if (customStatus.emoji) {
+                    if (customStatus.emoji.id) {
+                        emojiStr = `<img class="status-emoji" src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.${customStatus.emoji.animated?'gif':'png'}" style="width:1.2rem; vertical-align:middle; margin-right:5px;">`;
+                    } else {
+                        emojiStr = `<span style="margin-right:5px;">${customStatus.emoji.name}</span>`;
+                    }
+                }
+                if (statusText) statusText.innerHTML = `${emojiStr}${customStatus.state || ''}`;
+            } else if (otherActivities.length > 0) {
+                if (statusText) statusText.innerText = `Playing ${otherActivities[0].name}${otherActivities.length > 1 ? ' & others' : ''}`;
+            } else {
+                if (statusText) statusText.innerText = data.discord_status === 'offline' ? 'Offline' : 'AFK................???';
+            }
         }
     }
+
 
 
 
