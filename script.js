@@ -120,7 +120,10 @@ function updatePresence(data) {
     const decoImg = document.querySelector('.avatar-decoration');
     if (decoImg) {
         if (decoration) {
-            decoImg.src = `https://cdn.discordapp.com/avatar-decorations/${data.discord_user.id}/${decoration}.png?size=240`;
+            const newSrc = `https://cdn.discordapp.com/avatar-decorations/${data.discord_user.id}/${decoration}.png?size=480`;
+            if (decoImg.src !== newSrc) {
+                decoImg.src = newSrc;
+            }
             decoImg.style.display = 'block';
         } else {
             decoImg.style.display = 'none';
@@ -134,16 +137,49 @@ function updatePresence(data) {
     if (statusIndicator) statusIndicator.style.background = color;
     if (miniStatus) miniStatus.style.background = color;
 
-    // Update Voice Status (Broader check)
-    const isInVoice = data.activities.some(a => 
-        (a.name && (a.name.toLowerCase().includes('voice') || a.name.toLowerCase().includes('channel') || a.name.toLowerCase() === 'discord')) || 
-        (a.state && (a.state.toLowerCase().includes('voice') || a.state.toLowerCase().includes('joined'))) ||
-        (a.details && (a.details.toLowerCase().includes('voice')))
-    );
-    
-    if (voiceDetails) voiceDetails.style.display = isInVoice ? 'flex' : 'none';
-    
+    // Update Voice Status (Enhanced)
+    const voiceCard = document.querySelector('.voice-card-container');
+    const voiceChannelName = document.querySelector('.voice-channel-name');
+    const voiceServerName = document.querySelector('.voice-server-name');
     const voiceLiveIndicator = document.querySelector('.voice-live-indicator');
+
+    const voiceActivity = data.activities.find(a => 
+        (a.name === 'Discord' && a.details && a.details.toLowerCase().includes('voice')) ||
+        (a.assets && a.assets.large_text && a.assets.large_text.toLowerCase().includes('voice'))
+    );
+
+    const isInVoice = !!voiceActivity;
+    
+    if (voiceCard) {
+        if (isInVoice) {
+            // Extract Channel and Server
+            // Pattern 1: state usually has the channel name, details has "In Voice"
+            // Pattern 2: some instances have "Channel: Name"
+            let channel = voiceActivity.state || 'Voice Channel';
+            let server = '';
+
+            // Try to separate channel/server if they are combined or in other fields
+            if (voiceActivity.assets && voiceActivity.assets.large_text) {
+                const largeText = voiceActivity.assets.large_text;
+                if (largeText.includes(':')) {
+                    server = largeText.split(':')[0].trim();
+                } else {
+                    server = largeText;
+                }
+            }
+
+            // Cleanup "Channel:" prefix if it exists
+            channel = channel.replace(/^Channel:\s*/i, '');
+
+            if (voiceChannelName) voiceChannelName.innerText = channel;
+            if (voiceServerName) voiceServerName.innerText = server ? `in ${server}` : 'Real-time Voice';
+            
+            voiceCard.style.display = 'flex';
+        } else {
+            voiceCard.style.display = 'none';
+        }
+    }
+    
     if (voiceLiveIndicator) voiceLiveIndicator.style.display = isInVoice ? 'flex' : 'none';
 
     // Update Spotify Display
@@ -279,6 +315,14 @@ if (statusCard) {
         statusCard.classList.toggle('show-poster');
     });
 }
+
+// Voice "Open" Button Interactivity
+document.addEventListener('click', (e) => {
+    if (e.target && e.target.classList.contains('voice-open-btn')) {
+        const discordId = localStorage.getItem('discord_id') || DISCORD_ID;
+        window.open(`https://discord.com/users/${discordId}`, '_blank');
+    }
+});
 
 // Music Player Implementation
 function initMusicPlayer() {
@@ -426,9 +470,42 @@ function initMusicPlayer() {
     });
 }
 
+// Custom Cursor Movement
+function initCustomCursor() {
+    const cursor = document.getElementById('custom-cursor');
+    if (!cursor) return;
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let cursorX = 0;
+    let cursorY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animate() {
+        // Smooth interpolation for cursor movement
+        const dx = mouseX - cursorX;
+        const dy = mouseY - cursorY;
+        
+        cursorX += dx * 0.2;
+        cursorY += dy * 0.2;
+
+        cursor.style.left = `${cursorX}px`;
+        cursor.style.top = `${cursorY}px`;
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+}
+
 // Initialize all components
 document.addEventListener('DOMContentLoaded', () => {
     initMusicPlayer();
+    initCustomCursor();
     fetchDiscordStatus();
     setInterval(fetchDiscordStatus, 3000);
 });

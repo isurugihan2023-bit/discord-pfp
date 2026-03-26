@@ -16,7 +16,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: auto;
+    cursor: none !important;
 }
 
 body {
@@ -70,7 +70,7 @@ body {
 .profile-card {
     width: 415px;
     background: var(--card-bg);
-    backdrop-filter: blur(25px);
+    backdrop-filter: blur(35px);
     border: 1px solid var(--glass-border);
     border-radius: 20px;
     position: relative;
@@ -115,6 +115,17 @@ body {
     border: none;
     object-fit: cover;
     background: var(--accent-dark);
+}
+
+.avatar-decoration {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    pointer-events: none;
+    z-index: 10;
 }
 
 
@@ -162,7 +173,7 @@ body {
     display: inline-flex;
     align-items: center;
     background: rgba(0, 173, 238, 0.1);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(18px);
     border: 1px solid rgba(0, 173, 238, 0.3);
     color: #00adee;
     padding: 6px 14px;
@@ -206,6 +217,7 @@ body {
     border-radius: 12px;
     padding: 15px;
     margin-bottom: 30px;
+    backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.02);
     text-align: left;
     transition: all 0.3s;
@@ -398,18 +410,145 @@ body {
     100% { opacity: 0.6; transform: scale(0.9); }
 }
 
-.voice-status-badge {
+.voice-card-container {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.035);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    animation: fadeIn 0.4s ease-out;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.voice-header-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-main);
+    font-size: 0.75rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.header-info-icon {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    opacity: 0.6;
+}
+
+.voice-card-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.voice-channel-info {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #23a55a;
-    font-size: 0.85rem;
-    font-weight: 600;
+    flex: 1;
 }
 
-.voice-status-badge i {
+.voice-speaker-icon {
     font-size: 1.1rem;
-    animation: voicePulse 2s infinite;
+    color: var(--text-main);
+}
+
+.voice-texts {
+    display: flex;
+    flex-direction: column;
+}
+
+.voice-channel-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+}
+
+.voice-server-name {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+}
+
+.voice-participants {
+    display: flex;
+    align-items: center;
+}
+
+.participant-avatar-group {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px;
+    border-radius: 20px;
+    gap: 4px;
+}
+
+.participant-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.participant-more {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-dim);
+}
+
+.voice-open-btn {
+    background: #4e5058;
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: none;
+    transition: background 0.2s;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.voice-open-btn:hover {
+    background: #6d6f78;
+}
+
+.voice-status-edit-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    margin: 5px 0;
+    cursor: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.voice-status-edit-line:hover {
+    opacity: 1;
+}
+
+.status-pencil-icon {
+    font-size: 0.7rem;
+}
+
+.status-card-box.show-poster .voice-card-container {
+    display: flex;
 }
 
 .spotify-cover-wrapper {
@@ -497,6 +636,7 @@ body {
     height: 45px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 50%;
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -621,7 +761,7 @@ body {
 
 .music-btn {
     background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: white;
     width: 45px;
@@ -653,7 +793,7 @@ body {
     align-items: center;
     gap: 12px;
     background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     padding: 8px 15px;
     border-radius: 100px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -725,3 +865,27 @@ body {
     font-family: monospace;
 }
 
+/* Custom Cursor Style */
+#custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background: var(--primary-blue);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    box-shadow: 
+        0 0 10px var(--primary-blue),
+        0 0 20px var(--primary-blue),
+        0 0 30px var(--primary-blue);
+    transform: translate(-50%, -50%);
+    transition: transform 0.05s ease-out;
+    mix-blend-mode: screen;
+}
+
+body:active #custom-cursor {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.8;
+}

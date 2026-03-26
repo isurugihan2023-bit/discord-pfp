@@ -92,11 +92,32 @@
                                 <!-- Dynamic items will be injected here -->
                             </div>
                             
-                            <div class="voice-details">
-                                <div class="voice-status-badge">
-                                    <i class="fa-solid fa-microphone-lines"></i>
-                                    <span>In Voice Channel</span>
+                            <div class="voice-card-container">
+                                <div class="voice-header-label">
+                                    <span>IN VOICE</span>
+                                    <i class="fa-solid fa-circle-info header-info-icon"></i>
                                 </div>
+                                <div class="voice-card-content">
+                                    <div class="voice-channel-info">
+                                        <i class="fa-solid fa-volume-high voice-speaker-icon"></i>
+                                        <div class="voice-texts">
+                                            <span class="voice-channel-name">Channel Name</span>
+                                            <span class="voice-server-name">in Server Name</span>
+                                        </div>
+                                    </div>
+                                    <div class="voice-participants">
+                                        <!-- Participant avatars could go here -->
+                                        <div class="participant-avatar-group">
+                                            <img src="avatar.png" alt="User" class="participant-avatar">
+                                            <div class="participant-more">+1</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="voice-status-edit-line">
+                                    <span>Set a channel status</span>
+                                    <i class="fa-solid fa-pencil status-pencil-icon"></i>
+                                </div>
+                                <button class="voice-open-btn">Open</button>
                             </div>
                             
 
@@ -158,6 +179,7 @@
         </audio>
     </div>
 
+    <div id="custom-cursor"></div>
     <script src="script.js"></script>
 </body>
 </html>
