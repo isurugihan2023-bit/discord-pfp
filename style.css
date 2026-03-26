@@ -319,7 +319,7 @@ body {
     margin-top: 0;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -336,19 +336,19 @@ body {
 .activity-details {
     display: none;
     flex-direction: column;
-    gap: 15px;
+    gap: 8px;
 }
 
 .activity-item {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
     animation: fadeIn 0.5s ease-out;
 }
 
 .activity-icon-container {
-    width: 65px;
-    height: 65px;
+    width: 45px;
+    height: 45px;
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.03);
     border: none;
@@ -373,11 +373,11 @@ body {
 
 .activity-name {
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
 }
 
 .activity-state {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--text-dim);
 }
 
@@ -414,7 +414,7 @@ body {
 .spotify-cover-wrapper {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 
 .spotify-info {
@@ -424,17 +424,17 @@ body {
 
 .spotify-info .song-name {
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 
 .spotify-info .artist-name {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: var(--text-dim);
 }
 
 .spotify-cover {
-    width: 65px;
-    height: 65px;
+    width: 45px;
+    height: 45px;
     border-radius: 10px;
     box-shadow: none;
     border: none;
