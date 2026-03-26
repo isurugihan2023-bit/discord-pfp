@@ -356,10 +356,7 @@ function updatePresence(data) {
     }
 
 
-    const noStatusHint = document.querySelector('.no-status-hint');
-    if (noStatusHint) {
-        noStatusHint.style.display = (!data.listening_to_spotify && !isInVoice && otherActivities.length === 0) ? 'flex' : 'none';
-    }
+
 
     // DIAGNOSTIC LOG (F12 Console):
     console.log('--- Lanyard Presence Data ---');

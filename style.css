@@ -598,17 +598,6 @@ body {
     animation: fadeIn 0.3s ease-out;
 }
 
-/* Responsive */
-.no-status-hint {
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    opacity: 0.7;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 15px;
-}
+
 
 
