@@ -111,7 +111,7 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    border: 6px solid var(--accent-dark);
+    border: none;
     object-fit: cover;
     background: var(--accent-dark);
 }
@@ -125,7 +125,7 @@ body {
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    border: 5px solid var(--accent-dark);
+    border: none;
     background: var(--status-online);
     animation: liveStatusPulse 3s infinite;
 }
@@ -238,7 +238,7 @@ body {
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    border: 3px solid #1e1f22;
+    border: none;
     background: var(--status-online);
 }
 
