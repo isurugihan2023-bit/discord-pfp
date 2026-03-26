@@ -280,3 +280,37 @@ if (statusCard) {
     });
 }
 
+// Music Player Implementation
+function initMusicPlayer() {
+    const music = document.getElementById('bg-music');
+    const toggleBtn = document.getElementById('music-toggle');
+    const icon = toggleBtn.querySelector('i');
+    let isPlaying = false;
+
+    if (!music || !toggleBtn) return;
+
+    // Set initial volume
+    music.volume = 0.3;
+
+    toggleBtn.addEventListener('click', () => {
+        if (isPlaying) {
+            music.pause();
+            icon.className = 'fas fa-volume-mute';
+            toggleBtn.classList.remove('playing');
+        } else {
+            music.play().catch(err => {
+                console.error("Playback failed:", err);
+            });
+            icon.className = 'fas fa-volume-up';
+            toggleBtn.classList.add('playing');
+        }
+        isPlaying = !isPlaying;
+    });
+}
+
+// Initialize all components
+document.addEventListener('DOMContentLoaded', () => {
+    initMusicPlayer();
+    fetchDiscordStatus();
+    setInterval(fetchDiscordStatus, 3000);
+});
